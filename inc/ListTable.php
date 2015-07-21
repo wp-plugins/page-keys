@@ -2,7 +2,7 @@
 
 namespace tf\PageKeys;
 
-use tf\PageKeys\Model;
+use tf\PageKeys\Models;
 
 require_once ABSPATH . 'wp-admin/includes/class-wp-list-table.php';
 
@@ -29,16 +29,16 @@ class ListTable extends \WP_List_Table {
 	private $name_prefix;
 
 	/**
-	 * @var Model\SettingsPage
+	 * @var Models\SettingsPage
 	 */
 	private $settings_page;
 
 	/**
 	 * Constructor. Set up the properties.
 	 *
-	 * @param Model\SettingsPage $settings_page Settings page model.
+	 * @param Models\SettingsPage $settings_page Settings page model.
 	 */
-	public function __construct( Model\SettingsPage $settings_page ) {
+	public function __construct( Models\SettingsPage $settings_page ) {
 
 		$this->settings_page = $settings_page;
 
@@ -56,7 +56,7 @@ class ListTable extends \WP_List_Table {
 			'page_id'  => __( 'Page', 'page-keys' ),
 		);
 
-		$this->name_prefix = Model\Option::get_name();
+		$this->name_prefix = Models\Option::get_name();
 	}
 
 	/**
@@ -82,8 +82,6 @@ class ListTable extends \WP_List_Table {
 	/**
 	 * Return all columns.
 	 *
-	 * @see prepare_items()
-	 *
 	 * @return array
 	 */
 	public function get_columns() {
@@ -94,8 +92,6 @@ class ListTable extends \WP_List_Table {
 	/**
 	 * Return the hidden columns only.
 	 *
-	 * @see prepare_items()
-	 *
 	 * @return array
 	 */
 	public function get_hidden_columns() {
@@ -105,8 +101,6 @@ class ListTable extends \WP_List_Table {
 
 	/**
 	 * Return the sortable columns only.
-	 *
-	 * @see prepare_items()
 	 *
 	 * @return array
 	 */
@@ -123,15 +117,13 @@ class ListTable extends \WP_List_Table {
 	/**
 	 * Return all items.
 	 *
-	 * @see prepare_items()
-	 *
 	 * @return \stdClass[]
 	 */
 	private function get_items() {
 
 		$items = array();
 
-		foreach ( Model\Option::get() as $page_key => $page ) {
+		foreach ( Models\Option::get() as $page_key => $page ) {
 			$page_id = isset( $page[ 'page_id' ] ) ? intval( $page[ 'page_id' ] ) : '';
 
 			$items[ $page_key ] = (object) compact(
@@ -145,8 +137,6 @@ class ListTable extends \WP_List_Table {
 
 	/**
 	 * Sort the items according to the values given in the $_REQUEST superglobal.
-	 *
-	 * @see prepare_items()
 	 *
 	 * @param array $sortable_columns Sortable columns.
 	 *
@@ -174,8 +164,6 @@ class ListTable extends \WP_List_Table {
 	/**
 	 * Add an empty item if the according action is set in the $_GET superglobal.
 	 *
-	 * @see prepare_items()
-	 *
 	 * @return void
 	 */
 	private function maybe_add_item() {
@@ -191,10 +179,7 @@ class ListTable extends \WP_List_Table {
 	/**
 	 * Return an empty item.
 	 *
-	 * @see maybe_add_item()
-	 * @see single_row()
-	 *
-	 * @return object
+	 * @return \stdClass
 	 */
 	private function get_empty_item() {
 
@@ -222,7 +207,7 @@ class ListTable extends \WP_List_Table {
 	/**
 	 * Render a single row.
 	 *
-	 * @param \stdClass $item Current item.
+	 * @param \stdClass $item Current item object.
 	 *
 	 * @return void
 	 */
@@ -237,8 +222,6 @@ class ListTable extends \WP_List_Table {
 
 	/**
 	 * Return a single row.
-	 *
-	 * @see tf\PageKeys\Controller\Action::add_page_key_ajax()
 	 *
 	 * @return string
 	 */
@@ -255,7 +238,7 @@ class ListTable extends \WP_List_Table {
 	/**
 	 * Individual callback for the 'page key' column.
 	 *
-	 * @param \stdClass $item Current item.
+	 * @param \stdClass $item Current item object.
 	 *
 	 * @return string
 	 */
@@ -310,7 +293,7 @@ class ListTable extends \WP_List_Table {
 	/**
 	 * Individual callback for the 'page id' column.
 	 *
-	 * @param \stdClass $item Current item.
+	 * @param \stdClass $item Current item object.
 	 *
 	 * @return string
 	 */
@@ -336,12 +319,12 @@ class ListTable extends \WP_List_Table {
 	/**
 	 * Fallback for all valid columns without an individual callback.
 	 *
-	 * @param  \stdClass $item        Current item.
-	 * @param  string    $column_name Current column name.
+	 * @param \stdClass $item        Current item object.
+	 * @param string    $column_name Current column name.
 	 *
 	 * @return string
 	 */
-	public function column_default( \stdClass $item, $column_name ) {
+	public function column_default( $item, $column_name ) {
 
 		if (
 			array_key_exists( $column_name, $this->columns )

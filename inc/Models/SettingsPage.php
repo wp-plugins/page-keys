@@ -1,14 +1,14 @@
 <?php # -*- coding: utf-8 -*-
 
-namespace tf\PageKeys\Model;
+namespace tf\PageKeys\Models;
 
-use tf\PageKeys\Controller;
-use tf\PageKeys\View;
+use tf\PageKeys\Controllers;
+use tf\PageKeys\Views;
 
 /**
  * Class SettingsPage
  *
- * @package tf\PageKeys\Model
+ * @package tf\PageKeys\Models
  */
 class SettingsPage {
 
@@ -18,21 +18,23 @@ class SettingsPage {
 	private $capabilities;
 
 	/**
+	 * @var Nonce[]
+	 */
+	private $nonces;
+
+	/**
 	 * @var string
 	 */
 	private $slug = 'page_keys';
 
 	/**
-	 * @var string
-	 */
-	private $title;
-
-	/**
 	 * Constructor. Set up the properties.
 	 *
-	 * @see tf\PageKeys\Controller\Admin::init()
+	 * @param Nonce[] $nonces Nonce objects.
 	 */
-	public function __construct() {
+	public function __construct( array $nonces ) {
+
+		$this->nonces = $nonces;
 
 		/**
 		 * Filter the capability required to list the page keys.
@@ -47,14 +49,22 @@ class SettingsPage {
 		 * @param string $capability Capability required to edit the page keys.
 		 */
 		$this->capabilities[ 'edit' ] = apply_filters( 'edit_page_keys_capability', 'edit_published_pages' );
+	}
 
-		$this->title = _x( 'Page Keys', 'Settings page title', 'page-keys' );
+	/**
+	 * Return the capability for the given action.
+	 *
+	 * @param string $action Capability action.
+	 *
+	 * @return string
+	 */
+	public function get_capability( $action ) {
+
+		return empty( $this->capabilities[ $action ] ) ? 'do_not_allow' : $this->capabilities[ $action ];
 	}
 
 	/**
 	 * Return the page slug.
-	 *
-	 * @see tf\PageKeys\View\AdminNotice::render()
 	 *
 	 * @return string
 	 */
@@ -64,42 +74,7 @@ class SettingsPage {
 	}
 
 	/**
-	 * Return the page title.
-	 *
-	 * @see tf\PageKeys\View\AdminNotice::render()
-	 *
-	 * @return string
-	 */
-	public function get_title() {
-
-		return $this->title;
-	}
-
-	/**
-	 * Add the settings page to the Pages menu.
-	 *
-	 * @wp-hook admin_menu
-	 *
-	 * @return void
-	 */
-	public function add() {
-
-		$menu_title = _x( 'Page Keys', 'Menu item title', 'page-keys' );
-		$controller = new Controller\Action( $this );
-		$view = new View\SettingsPage( $this, $controller );
-		add_pages_page(
-			$this->title,
-			$menu_title,
-			$this->capabilities[ 'list' ],
-			$this->slug,
-			array( $view, 'render' )
-		);
-	}
-
-	/**
 	 * Check if the current user has the capability required to perform the given action.
-	 *
-	 * @see tf\PageKeys\View\AdminNotice::render()
 	 *
 	 * @param string $action Action name.
 	 *
@@ -113,8 +88,6 @@ class SettingsPage {
 	/**
 	 * Return the URL for adding a page key.
 	 *
-	 * @see tf\PageKeys\ListTable::column_page_key()
-	 *
 	 * @return string
 	 */
 	public function get_add_page_key_url() {
@@ -124,8 +97,6 @@ class SettingsPage {
 
 	/**
 	 * Return the URL for deleting the given page key.
-	 *
-	 * @see tf\PageKeys\ListTable::column_page_key()
 	 *
 	 * @param string $page_key Page key.
 	 *
@@ -155,13 +126,16 @@ class SettingsPage {
 		}
 
 		$query_args = array(
-			'page'     => $this->slug,
-			'action'   => $action,
-			'_wpnonce' => Nonce::get(),
+			'page'   => $this->slug,
+			'action' => $action,
 		);
-		if ( $page_key !== '' ) {
+		if ( isset( $this->nonces[ $action ] ) ) {
+			$query_args[ '_wpnonce' ] = $this->nonces[ $action ]->get();
+		}
+		if ( $page_key ) {
 			$query_args[ 'page_key' ] = $page_key;
 		}
+
 		$url = add_query_arg( $query_args, 'edit.php?post_type=page' );
 
 		return admin_url( $url );

@@ -1,14 +1,11 @@
 <?php # -*- coding: utf-8 -*-
 
-namespace tf\PageKeys\Controller;
-
-use tf\PageKeys\Model;
-use tf\PageKeys\Model\SettingsError;
+namespace tf\PageKeys\Models;
 
 /**
  * Class Settings
  *
- * @package tf\PageKeys\Controller
+ * @package tf\PageKeys\Models
  */
 class Settings {
 
@@ -19,26 +16,24 @@ class Settings {
 	 *
 	 * @return void
 	 */
-	public function register_settings() {
+	public function register() {
 
-		$option_name = Model\Option::get_name();
+		$option_name = Option::get_name();
 		register_setting(
 			$option_name,
 			$option_name,
-			array( $this, 'sanitize_data' )
+			array( $this, 'sanitize' )
 		);
 	}
 
 	/**
 	 * Sanitize the settings data.
 	 *
-	 * @see register_settings()
-	 *
 	 * @param array $data Settings data.
 	 *
 	 * @return array
 	 */
-	public function sanitize_data( $data ) {
+	public function sanitize( $data ) {
 
 		$sanitized_data = array();
 
@@ -64,7 +59,7 @@ class Settings {
 					'page_id'
 				);
 			} else {
-				$error = new SettingsError\DuplicatePageKey( $page_key, $page_id );
+				$error = new SettingsErrors\DuplicatePageKey( $page_key, $page_id );
 				$error->add();
 			}
 		}

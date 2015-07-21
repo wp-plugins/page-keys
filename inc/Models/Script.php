@@ -1,11 +1,11 @@
 <?php # -*- coding: utf-8 -*-
 
-namespace tf\PageKeys\Model;
+namespace tf\PageKeys\Models;
 
 /**
  * Class Script
  *
- * @package tf\PageKeys\Model
+ * @package tf\PageKeys\Models
  */
 class Script {
 
@@ -28,17 +28,37 @@ class Script {
 	private $handle = 'page-keys-admin';
 
 	/**
+	 * @var string[]
+	 */
+	private $nonces;
+
+	/**
 	 * Constructor. Set up the properties.
 	 *
-	 * @param string $file Main plugin file.
+	 * @param string  $file   Main plugin file.
+	 * @param Nonce[] $nonces Nonce objects.
 	 */
-	public function __construct( $file ) {
+	public function __construct( $file, array $nonces ) {
 
 		$this->file = $file;
+
+		foreach ( $nonces as $action => $nonce ) {
+			$this->nonces[ $action ] = $nonce->get();
+		}
 	}
 
 	/**
-	 * Return action name for given key.
+	 * Return all actions.
+	 *
+	 * @return string[]
+	 */
+	public function get_actions() {
+
+		return $this->actions;
+	}
+
+	/**
+	 * Return the action name for the given key.
 	 *
 	 * @param string $key Action key.
 	 *
@@ -59,7 +79,8 @@ class Script {
 	public function enqueue() {
 
 		$url = plugin_dir_url( $this->file );
-		$file = 'assets/js/admin.js';
+		$infix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
+		$file = 'assets/js/admin' . $infix . '.js';
 		$path = plugin_dir_path( $this->file );
 		$version = filemtime( $path . $file );
 		wp_enqueue_script(
@@ -75,7 +96,7 @@ class Script {
 				'delete' => __( 'Do you really want to delete this page key?', 'page-keys' ),
 				'unload' => __( 'There are unsaved changes. Do you really want to leave?', 'page-keys' ),
 			),
-			'nonce'    => Nonce::get(),
+			'nonces'   => $this->nonces,
 			'url'      => admin_url( 'admin-ajax.php', 'relative' ),
 		);
 		wp_localize_script( $this->handle, 'tfPageKeysData', $data );

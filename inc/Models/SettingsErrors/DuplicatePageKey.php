@@ -1,11 +1,11 @@
 <?php # -*- coding: utf-8 -*-
 
-namespace tf\PageKeys\Model\SettingsError;
+namespace tf\PageKeys\Models\SettingsErrors;
 
 /**
  * Class DuplicatePageKey
  *
- * @package tf\PageKeys\Model\SettingsError
+ * @package tf\PageKeys\Models\SettingsErrors
  */
 class DuplicatePageKey extends SettingsError {
 

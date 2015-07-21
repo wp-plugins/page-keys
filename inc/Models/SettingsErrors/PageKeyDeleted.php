@@ -1,11 +1,11 @@
 <?php # -*- coding: utf-8 -*-
 
-namespace tf\PageKeys\Model\SettingsError;
+namespace tf\PageKeys\Models\SettingsErrors;
 
 /**
  * Class PageKeyDeleted
  *
- * @package tf\PageKeys\Model\SettingsError
+ * @package tf\PageKeys\Models\SettingsErrors
  */
 class PageKeyDeleted extends SettingsError {
 

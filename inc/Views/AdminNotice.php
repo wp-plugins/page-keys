@@ -1,29 +1,27 @@
 <?php # -*- coding: utf-8 -*-
 
-namespace tf\PageKeys\View;
+namespace tf\PageKeys\Views;
 
-use tf\PageKeys\Model;
+use tf\PageKeys\Models;
 
 /**
  * Class AdminNotice
  *
- * @package tf\PageKeys\View
+ * @package tf\PageKeys\Views
  */
 class AdminNotice {
 
 	/**
-	 * @var Model\SettingsPage
+	 * @var Models\SettingsPage
 	 */
 	private $settings_page;
 
 	/**
 	 * Constructor. Set up the properties.
 	 *
-	 * @see tf\PageKeys\Controller\Admin::init()
-	 *
-	 * @param Model\SettingsPage $settings_page Settings page model.
+	 * @param Models\SettingsPage $settings_page Settings page model.
 	 */
-	public function __construct( Model\SettingsPage $settings_page ) {
+	public function __construct( Models\SettingsPage $settings_page ) {
 
 		$this->settings_page = $settings_page;
 	}
@@ -42,15 +40,15 @@ class AdminNotice {
 		$settings_page_slug = $this->settings_page->get_slug();
 
 		if (
-			! $this->settings_page->current_user_can( 'edit' )
-			|| $hook_suffix === 'pages_page_' . $settings_page_slug
+			$hook_suffix === 'pages_page_' . $settings_page_slug
+			|| ! $this->settings_page->current_user_can( 'edit' )
 		) {
 			return;
 		}
 
 		$missing_pages = FALSE;
 
-		foreach ( Model\Option::get() as $page ) {
+		foreach ( Models\Option::get() as $page ) {
 			if ( empty( $page[ 'page_id' ] ) ) {
 				$missing_pages = TRUE;
 				break;

@@ -1,11 +1,11 @@
 <?php # -*- coding: utf-8 -*-
 
-namespace tf\PageKeys\Model\SettingsError;
+namespace tf\PageKeys\Models\SettingsErrors;
 
 /**
  * Class NoPermissionToEdit
  *
- * @package tf\PageKeys\Model\SettingsError
+ * @package tf\PageKeys\Models\SettingsErrors
  */
 class NoPermissionToEdit extends SettingsError {
 

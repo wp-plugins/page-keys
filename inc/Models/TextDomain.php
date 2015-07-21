@@ -1,13 +1,18 @@
 <?php # -*- coding: utf-8 -*-
 
-namespace tf\PageKeys\Model;
+namespace tf\PageKeys\Models;
 
 /**
  * Class TextDomain
  *
- * @package tf\PageKeys\Model
+ * @package tf\PageKeys\Models
  */
 class TextDomain {
+
+	/**
+	 * @var string
+	 */
+	private $domain = 'page-keys';
 
 	/**
 	 * @var string
@@ -16,8 +21,6 @@ class TextDomain {
 
 	/**
 	 * Constructor. Set up the properties.
-	 *
-	 * @see tf\PageKeys\Controller\Admin::__construct()
 	 *
 	 * @param string $file Main plugin file.
 	 */
@@ -30,13 +33,11 @@ class TextDomain {
 	/**
 	 * Load the text domain.
 	 *
-	 * @see tf\PageKeys\Controller\Admin::init()
-	 *
 	 * @return bool
 	 */
 	public function load() {
 
-		return load_plugin_textdomain( 'page-keys', FALSE, $this->path );
+		return load_plugin_textdomain( $this->domain, FALSE, $this->path );
 	}
 
 }

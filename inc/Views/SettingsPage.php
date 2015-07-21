@@ -1,44 +1,61 @@
 <?php # -*- coding: utf-8 -*-
 
-namespace tf\PageKeys\View;
+namespace tf\PageKeys\Views;
 
-use tf\PageKeys\Controller;
+use tf\PageKeys\Controllers;
 use tf\PageKeys\ListTable;
-use tf\PageKeys\Model;
+use tf\PageKeys\Models;
 
 /**
  * Class SettingsPage
  *
- * @package tf\PageKeys\View
+ * @package tf\PageKeys\Views
  */
 class SettingsPage {
 
 	/**
-	 * @var Controller\Action
-	 */
-	private $controller;
-
-	/**
-	 * @var Model\SettingsPage
+	 * @var Models\SettingsPage
 	 */
 	private $model;
 
 	/**
+	 * @var string
+	 */
+	private $title;
+
+	/**
 	 * Constructor. Set up the properties.
 	 *
-	 * @param Model\SettingsPage $model      Settings page model.
-	 * @param Controller\Action  $controller Action controller.
+	 * @param Models\SettingsPage $model Settings page model.
 	 */
-	public function __construct( Model\SettingsPage $model, Controller\Action $controller ) {
+	public function __construct( Models\SettingsPage $model ) {
 
 		$this->model = $model;
-		$this->controller = $controller;
+
+		$this->title = _x( 'Page Keys', 'Settings page title', 'page-keys' );
+	}
+
+	/**
+	 * Add the settings page to the Pages menu.
+	 *
+	 * @wp-hook admin_menu
+	 *
+	 * @return void
+	 */
+	public function add() {
+
+		$menu_title = _x( 'Page Keys', 'Menu item title', 'page-keys' );
+		add_pages_page(
+			$this->title,
+			$menu_title,
+			$this->model->get_capability( 'list' ),
+			$this->model->get_slug(),
+			array( $this, 'render' )
+		);
 	}
 
 	/**
 	 * Render the HTML.
-	 *
-	 * @see tf\PageKeys\Model\SettingsPage::add()
 	 *
 	 * @return void
 	 */
@@ -46,18 +63,14 @@ class SettingsPage {
 
 		$current_user_can_edit = $this->model->current_user_can( 'edit' );
 
-		$this->controller->maybe_take_action();
-
-		$title = $this->model->get_title();
-
-		$option_name = Model\Option::get_name();
+		$option_name = Models\Option::get_name();
 
 		$list_table = new ListTable( $this->model );
 		$list_table->prepare_items();
 		?>
 		<div class="wrap">
 			<h2>
-				<?php esc_html_e( $title ); ?>
+				<?php esc_html_e( $this->title ); ?>
 				<?php if ( $current_user_can_edit ) : ?>
 					<a href="<?php echo $this->model->get_add_page_key_url(); ?>" class="add-new-h2">
 						<?php esc_html_e( 'Add New' ); ?>
@@ -71,7 +84,7 @@ class SettingsPage {
 
 				<?php if ( $current_user_can_edit ) : ?>
 					<?php submit_button(); ?>
-					<div class="error inline hide-if-no-js">
+					<div class="error inline">
 						<p>
 							<?php _e( '<strong>Warning:</strong> Duplicate page keys found!', 'page-keys' ); ?>
 						</p>

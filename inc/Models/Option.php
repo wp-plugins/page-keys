@@ -1,11 +1,11 @@
 <?php # -*- coding: utf-8 -*-
 
-namespace tf\PageKeys\Model;
+namespace tf\PageKeys\Models;
 
 /**
  * Class Option
  *
- * @package tf\PageKeys\Model
+ * @package tf\PageKeys\Models
  */
 class Option {
 

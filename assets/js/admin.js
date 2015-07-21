@@ -1,102 +1,147 @@
-jQuery.noConflict();
-jQuery( function( $ ) {
-	'use strict';
+var Plugin = Plugin || {};
 
-	var pluginData = tfPageKeysData,
-		$addNew = $( 'a.add-new-h2' ),
-		$form = $( '#page-keys-form' ),
-		$listTable = $form.find( '.wp-list-table.page-keys' ),
-		$inputs = $listTable.find( 'input.page-key' ),
-		$submit = $form.find( '#submit' ),
-		$duplicatesNotice = $form.find( '.error.inline' ),
-		unsavedChanges = false;
+/* global tfPageKeysData */
+;( function( Plugin, $, pluginData ) {
+	"use strict";
 
-	window.onbeforeunload = function() {
-		if ( unsavedChanges ) {
-			return pluginData.messages.unload;
-		}
-	};
+	Plugin.Button = {
+		initialize: function() {
+			$( 'a.add-new-h2' ).on( 'click', function( e ) {
+				e.preventDefault();
 
-	$form.submit( function() {
-		window.onbeforeunload = null;
-	} );
-
-	$duplicatesNotice.hide();
-
-	function checkForDuplicates( pageKey ) {
-		var $inputs = $listTable.find( 'input.page-key' ).filter( function() { return $( this ).val() === pageKey } ),
-			duplicatesFound = $inputs.length > 1;
-		$inputs.toggleClass( 'duplicate', duplicatesFound );
-		$duplicatesNotice.toggle( duplicatesFound );
-		$submit.prop( 'disabled', duplicatesFound );
-	}
-
-	$inputs.prop( 'readonly', true );
-
-	$listTable.on( 'change', 'input.page-key', function() {
-		checkForDuplicates( $( this ).val() );
-	} );
-
-	$addNew.on( 'click', function( e ) {
-		e.preventDefault();
-
-		var data = {
-			_wpnonce: pluginData.nonce,
-			action  : pluginData.actions.add
-		};
-		$.post( pluginData.url, data, function( response ) {
-			if ( response.success ) {
-				var $tr = $listTable.find( 'tbody tr' ).last(),
-					$row = $( response.data.row );
-				if ( $tr.hasClass( 'alternate' ) ) {
-					$row.removeClass( 'alternate' );
-				}
-				$tr.after( $row );
-				$row.find( 'input.page-key' ).select();
-				$submit.prop( 'disabled', false );
-				unsavedChanges = true;
-			} else {
-				$form.before( response.data.errors );
-			}
-		} );
-	} );
-
-	$listTable.on( 'click', 'a.edit', function( e ) {
-		e.preventDefault();
-
-		$( this ).closest( 'td' ).find( 'input' ).prop( 'readonly', false ).select();
-		$submit.prop( 'disabled', false );
-		unsavedChanges = true;
-	} );
-
-	$listTable.on( 'click', 'a.submitdelete', function( e ) {
-		e.preventDefault();
-
-		if ( confirm( pluginData.messages.delete ) ) {
+				Plugin.Button.addPageKey();
+			} );
+		},
+		addPageKey: function() {
 			var data = {
-				_wpnonce: pluginData.nonce,
-				action  : pluginData.actions.delete,
-				id      : $( this ).data( 'id' ),
-				page_key: $( this ).closest( 'td' ).find( 'input.page-key' ).val()
+				_wpnonce: pluginData.nonces.add,
+				action  : pluginData.actions.add
 			};
+
 			$.post( pluginData.url, data, function( response ) {
-				$form.before( response.data.errors );
 				if ( response.success ) {
-					$listTable.find( 'a.submitdelete-' + response.data.id ).closest( 'tr' ).hide( 'slow', function() {
-						var pageKey = $( this ).val();
-						$( this ).remove();
-						checkForDuplicates( pageKey );
-					} ).nextAll().toggleClass( 'alternate' );
+					var $tr = Plugin.ListTable.$listTable.find( 'tbody tr' ).last(),
+						$row = $( response.data.row );
+
+					if ( $tr.hasClass( 'alternate' ) ) {
+						$row.removeClass( 'alternate' );
+					}
+
+					$tr.after( $row );
+					$row.find( 'input.page-key' ).select();
+					Plugin.Form.$submit.prop( 'disabled', false );
+					Plugin.Form.unsavedChanges = true;
+				} else {
+					Plugin.Form.$form.before( response.data.errors );
 				}
 			} );
 		}
+	};
+
+	$( function() {
+		Plugin.Button.initialize();
 	} );
 
-	$submit.prop( 'disabled', true );
+} )( Plugin, jQuery, tfPageKeysData );
 
-	$listTable.on( 'change', 'select', function() {
-		$submit.prop( 'disabled', false );
-		unsavedChanges = true;
+/* global tfPageKeysData */
+;( function( Plugin, $, pluginData ) {
+	"use strict";
+
+	Plugin.Form = {
+		initialize: function() {
+			this.unsavedChanges = false;
+
+			window.onbeforeunload = function() {
+				if ( Plugin.Form.unsavedChanges ) {
+					return pluginData.messages.unload;
+				}
+			};
+
+			this.$form = $( '#page-keys-form' ).on( 'submit', function() {
+				window.onbeforeunload = null;
+			} );
+
+			this.$submit = this.$form.find( '#submit' ).prop( 'disabled', true );
+
+			this.$duplicatesNotice = this.$form.find( '.error.inline' ).hide();
+		},
+		reactOnChanges: function() {
+			this.$submit.prop( 'disabled', false );
+			this.unsavedChanges = true;
+		}
+	};
+
+	$( function() {
+		Plugin.Form.initialize();
 	} );
 
-} );
+} )( Plugin, jQuery, tfPageKeysData );
+
+/* global tfPageKeysData */
+;( function( Plugin, $, pluginData ) {
+	"use strict";
+
+	Plugin.ListTable = {
+		initialize: function() {
+			this.$listTable = Plugin.Form.$form.find( '.wp-list-table.page-keys' )
+				.on( 'change', 'input.page-key', function() {
+					Plugin.ListTable.checkForDuplicates( $( this ).val() );
+				} )
+				.on( 'click', 'a.edit', function( e ) {
+					e.preventDefault();
+
+					$( this ).closest( 'td' ).find( 'input' ).prop( 'readonly', false ).select();
+					Plugin.Form.reactOnChanges();
+				} )
+				.on( 'change', 'select', function() {
+					Plugin.Form.reactOnChanges();
+				} )
+				.on( 'click', 'a.submitdelete', function( e ) {
+					e.preventDefault();
+
+					Plugin.ListTable.deletePageKey( this );
+				} );
+
+			this.$listTable.find( 'input.page-key' ).prop( 'readonly', true );
+		},
+		checkForDuplicates: function( pageKey ) {
+			var $inputs = this.$listTable.find( 'input.page-key' ).filter( function() {
+					return $( this ).val() === pageKey;
+				} ),
+				duplicatesFound = $inputs.length > 1;
+
+			$inputs.toggleClass( 'duplicate', duplicatesFound );
+			Plugin.Form.$submit.prop( 'disabled', duplicatesFound );
+			Plugin.Form.$duplicatesNotice.toggle( duplicatesFound );
+		},
+		deletePageKey: function( link ) {
+			if ( confirm( pluginData.messages.delete ) ) {
+				var data = {
+					_wpnonce: pluginData.nonces.delete,
+					action  : pluginData.actions.delete,
+					id      : $( link ).data( 'id' ),
+					page_key: $( link ).closest( 'td' ).find( 'input.page-key' ).val()
+				};
+
+				$.post( pluginData.url, data, function( response ) {
+					Plugin.Form.$form.before( response.data.errors );
+
+					if ( response.success ) {
+						Plugin.ListTable.$listTable.find( 'a.submitdelete-' + response.data.id ).closest( 'tr' ).hide( 'slow', function() {
+							var pageKey = $( link ).val();
+
+							$( link ).remove();
+							Plugin.ListTable.checkForDuplicates( pageKey );
+						} ).nextAll().toggleClass( 'alternate' );
+					}
+				} );
+			}
+		}
+	};
+
+	$( function() {
+		Plugin.ListTable.initialize();
+	} );
+
+} )( Plugin, jQuery, tfPageKeysData );

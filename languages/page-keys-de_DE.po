@@ -1,9 +1,9 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Page Keys v1.0\n"
+"Project-Id-Version: Page Keys v1.2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2015-02-19 01:07:59+0000\n"
+"PO-Revision-Date: 2015-07-21 13:27:41+0000\n"
 "Last-Translator: Thorsten Frommen <tf@ipm-frommen.de>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -30,72 +30,72 @@ msgstr "Seitenschlüssel"
 msgid "Page"
 msgstr "Seite"
 
-#: inc/ListTable.php:216
+#: inc/ListTable.php:201
 #@ page-keys
 msgid "For each page key, please select a page."
 msgstr "Wähle für jeden Seitenschlüssel eine Seite aus."
 
-#: inc/ListTable.php:281
+#: inc/ListTable.php:264
 #@ default
 msgid "Edit"
 msgstr ""
 
-#: inc/ListTable.php:283
+#: inc/ListTable.php:266
 #@ default
 msgid "Edit this item"
 msgstr ""
 
-#: inc/ListTable.php:291
+#: inc/ListTable.php:274
 #@ default
 msgid "Delete Permanently"
 msgstr ""
 
-#: inc/ListTable.php:293
+#: inc/ListTable.php:276
 #@ default
 msgid "Delete this item permanently"
 msgstr ""
 
-#: inc/ListTable.php:373
+#: inc/ListTable.php:356
 #@ page-keys
 msgid "No page keys found."
 msgstr "Keine Seitenschlüssel gefunden."
 
-#: inc/Model/Script.php:75
+#: inc/Models/Script.php:96
 #@ page-keys
 msgid "Do you really want to delete this page key?"
 msgstr "Willst du diesen Seitenschlüssel wirklich löschen?"
 
-#: inc/Model/Script.php:76
+#: inc/Models/Script.php:97
 #@ page-keys
 msgid "There are unsaved changes. Do you really want to leave?"
 msgstr "Nicht alle Änderungen wurden gespeichert. Willst du die Seite wirklich verlassen?"
 
-#: inc/Model/SettingsPage.php:51
+#: inc/Views/SettingsPage.php:35
 #@ page-keys
 msgctxt "Settings page title"
 msgid "Page Keys"
 msgstr "Seitenschlüssel"
 
-#: inc/Model/SettingsPage.php:87
+#: inc/Views/SettingsPage.php:47
 #@ page-keys
 msgctxt "Menu item title"
 msgid "Page Keys"
 msgstr "Seitenschlüssel"
 
-#: inc/View/AdminNotice.php:68
+#: inc/Views/AdminNotice.php:66
 #, php-format
 #@ page-keys
 msgctxt "Admin notice, %s=link"
 msgid "<strong>Important:</strong> Not all registered page keys have a page assigned. %s."
 msgstr "<strong>Wichtig:</strong> Es wurde nicht für alle Seitenschlüssel eine Seite gewählt! %s."
 
-#: inc/View/AdminNotice.php:73
+#: inc/Views/AdminNotice.php:71
 #@ page-keys
 msgctxt "Link text in admin notice"
 msgid "Assign pages now"
 msgstr "Seiten jetzt wählen"
 
-#: inc/View/SettingsPage.php:63
+#: inc/Views/SettingsPage.php:76
 #@ default
 msgid "Add New"
 msgstr ""
@@ -106,77 +106,77 @@ msgstr ""
 msgid "Page Keys"
 msgstr "Seitenschlüssel"
 
-#. translators: plugin header field 'PluginURI'
-#: page-keys.php:0
-#@ page-keys
-msgid "https://github.com/tfrommen/page-keys"
-msgstr ""
-
-#. translators: plugin header field 'Description'
-#: page-keys.php:0
-#@ page-keys
-msgid "Register page keys, map actual WordPress pages to them, and access a page by its individual key."
-msgstr "Registriere Seitenschlüssel, mappe sie auf echte WordPress-Seiten und greife auf diese Seiten über ihre Seitenschlüssel zu."
-
 #. translators: plugin header field 'Author'
 #: page-keys.php:0
 #@ page-keys
 msgid "Thorsten Frommen"
 msgstr ""
 
-#. translators: plugin header field 'AuthorURI'
-#: page-keys.php:0
-#@ page-keys
-msgid "http://ipm-frommen.de"
-msgstr ""
-
-#. translators: plugin header field 'Version'
-#: page-keys.php:0
-#@ page-keys
-msgid "1.0"
-msgstr ""
-
-#: inc/Model/SettingsError/DuplicatePageKey.php:25
+#: inc/Models/SettingsErrors/DuplicatePageKey.php:25
 #, php-format
 #@ page-keys
 msgctxt "Settings error message, %s=page key, %d=page ID"
 msgid "Cannot map page key '%s' to page ID '%d'! Page key already set."
 msgstr "Seitenschlüssel '%s' konnte nicht auf Seite '%d' gemappt werden! Der Seitenschlüssel wird bereits verwendet."
 
-#: inc/Model/SettingsError/InvalidNonce.php:21
+#: inc/Models/SettingsErrors/InvalidNonce.php:21
 #@ page-keys
 msgctxt "Settings error message"
 msgid "Nonce invalid!"
 msgstr "Nonce ungültig!"
 
-#: inc/Model/SettingsError/InvalidPageKey.php:23
+#: inc/Models/SettingsErrors/InvalidPageKey.php:23
 #, php-format
 #@ page-keys
 msgctxt "Settings error message, %s=page key"
 msgid "Page key '%s' invalid!"
 msgstr "Seitenschlüssel '%s' ungültig!"
 
-#: inc/Model/SettingsError/MissingPageKey.php:21
+#: inc/Models/SettingsErrors/MissingPageKey.php:21
 #@ page-keys
 msgctxt "Settings error"
 msgid "No page key given!"
 msgstr "Kein Seitenschlüssel angegeben!"
 
-#: inc/Model/SettingsError/PageKeyDeleted.php:23
+#: inc/Models/SettingsErrors/PageKeyDeleted.php:23
 #, php-format
 #@ page-keys
 msgctxt "Settings error message, %s=page key"
 msgid "Page key '%s' permanently deleted."
 msgstr "Seitenschlüssel '%s' dauerhaft gelöscht."
 
-#: inc/View/SettingsPage.php:76
+#: inc/Views/SettingsPage.php:89
 #@ page-keys
 msgid "<strong>Warning:</strong> Duplicate page keys found!"
 msgstr "<strong>Warnung:</strong> Doppelte Seitenschlüssel gefunden!"
 
-#: inc/Model/SettingsError/NoPermissionToEdit.php:21
+#: inc/Models/SettingsErrors/NoPermissionToEdit.php:21
 #@ page-keys
 msgctxt "Settings error message"
 msgid "You don't have permission to edit page keys."
 msgstr "Du hast nicht die nötige Berechtigung, um Seitenschlüssel zu bearbeiten!"
+
+#. translators: plugin header field 'PluginURI'
+#: page-keys.php:0
+#@ page-keys
+msgid "https://wordpress.org/plugins/page-keys/"
+msgstr ""
+
+#. translators: plugin header field 'Description'
+#: page-keys.php:0
+#@ page-keys
+msgid "Register page keys, assign actual WordPress pages to them, and access each of these pages by its individual key."
+msgstr "Registriere Seitenschlüssel, weise ihnen echte WordPress-Seiten zu und greife auf jede dieser Seiten anhand ihres individuellen Seitenschlüssels zu."
+
+#. translators: plugin header field 'AuthorURI'
+#: page-keys.php:0
+#@ page-keys
+msgid "http://ipm-frommen.de/wordpress"
+msgstr ""
+
+#. translators: plugin header field 'Version'
+#: page-keys.php:0
+#@ page-keys
+msgid "1.2"
+msgstr ""
 

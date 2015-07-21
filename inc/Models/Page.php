@@ -1,11 +1,11 @@
 <?php # -*- coding: utf-8 -*-
 
-namespace tf\PageKeys\Model;
+namespace tf\PageKeys\Models;
 
 /**
  * Class Page
  *
- * @package tf\PageKeys\Model
+ * @package tf\PageKeys\Models
  */
 class Page {
 
@@ -17,7 +17,7 @@ class Page {
 	 *
 	 * @param int $post_id Post ID.
 	 *
-	 * @return void
+	 * @return bool
 	 */
 	public function delete_from_page_keys( $post_id ) {
 
@@ -26,12 +26,12 @@ class Page {
 			! isset( $post->post_type )
 			|| $post->post_type !== 'page'
 		) {
-			return;
+			return FALSE;
 		}
 
 		$pages = Option::get();
 		if ( ! $pages ) {
-			return;
+			return FALSE;
 		}
 
 		$update = FALSE;
@@ -49,6 +49,8 @@ class Page {
 		if ( $update ) {
 			Option::update( $pages );
 		}
+
+		return $update;
 	}
 
 }
