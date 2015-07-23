@@ -2,8 +2,8 @@
 
 namespace tf\PageKeys\Views;
 
-use tf\PageKeys\Controllers;
 use tf\PageKeys\ListTable;
+use tf\PageKeys\Models\SettingsPage as Model;
 use tf\PageKeys\Models;
 
 /**
@@ -14,7 +14,7 @@ use tf\PageKeys\Models;
 class SettingsPage {
 
 	/**
-	 * @var Models\SettingsPage
+	 * @var Model
 	 */
 	private $model;
 
@@ -26,9 +26,9 @@ class SettingsPage {
 	/**
 	 * Constructor. Set up the properties.
 	 *
-	 * @param Models\SettingsPage $model Settings page model.
+	 * @param Model $model Settings page model.
 	 */
-	public function __construct( Models\SettingsPage $model ) {
+	public function __construct( Model $model ) {
 
 		$this->model = $model;
 

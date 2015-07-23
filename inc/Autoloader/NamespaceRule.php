@@ -20,20 +20,21 @@ class NamespaceRule implements Rule {
 	private $namespace;
 
 	/**
-	 * Set up directory and namespace.
+	 * Set up the directory and the namespace.
 	 *
 	 * @param string $dir       Directory.
-	 * @param string $namespace Optional. Namespace, must be given as absolute namespace. Defaults to global namespace.
+	 * @param string $namespace Optional. Absolute namespace. Defaults to '\\'.
 	 */
 	public function __construct( $dir, $namespace = '\\' ) {
 
 		$dir = preg_replace( '~[\\|/]+~', DIRECTORY_SEPARATOR, $dir );
 		$this->dir = rtrim( $dir, DIRECTORY_SEPARATOR );
+
 		$this->namespace = $namespace;
 	}
 
 	/**
-	 * Load class or interface.
+	 * Load a class or an interface.
 	 *
 	 * @param string $name Class or interface name.
 	 *

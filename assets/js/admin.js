@@ -1,6 +1,6 @@
 var Plugin = Plugin || {};
 
-/* global tfPageKeysData */
+/* global jQuery, tfPageKeysData */
 ;( function( Plugin, $, pluginData ) {
 	"use strict";
 
@@ -44,7 +44,7 @@ var Plugin = Plugin || {};
 
 } )( Plugin, jQuery, tfPageKeysData );
 
-/* global tfPageKeysData */
+/* global jQuery, tfPageKeysData */
 ;( function( Plugin, $, pluginData ) {
 	"use strict";
 
@@ -78,7 +78,7 @@ var Plugin = Plugin || {};
 
 } )( Plugin, jQuery, tfPageKeysData );
 
-/* global tfPageKeysData */
+/* global jQuery, tfPageKeysData */
 ;( function( Plugin, $, pluginData ) {
 	"use strict";
 

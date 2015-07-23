@@ -72,7 +72,7 @@ class Script {
 	/**
 	 * Enqueue the script file.
 	 *
-	 * @wp-hook admin_enqueue_scripts
+	 * @wp-hook admin_print_scripts-{$hook_suffix}
 	 *
 	 * @return void
 	 */
@@ -87,7 +87,8 @@ class Script {
 			$this->handle,
 			$url . $file,
 			array( 'jquery' ),
-			$version
+			$version,
+			TRUE
 		);
 
 		$data = array(

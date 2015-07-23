@@ -3,7 +3,7 @@ Contributors: ipm-frommen
 Donate link: http://ipm-frommen.de/wordpress
 Tags: page, pages, keys
 Requires at least: 3.5.0
-Tested up to: 4.2.2
+Tested up to: 4.2.3
 Stable tag: trunk
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -89,6 +89,11 @@ This plugin requires PHP 5.3.
 1. **Settings page** - Here you can manage your page keys (i.e., add, edit, delete).
 
 == Changelog ==
+
+= 1.3 =
+* Fix some PHPDoc blocks.
+* Improve some namespace imports.
+* Compatible up to WordPress 4.2.3.
 
 = 1.2 =
 * Complete refactor.

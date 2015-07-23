@@ -47,7 +47,6 @@ class Plugin {
 
 			$settings = new Models\Settings();
 			$settings_page = new Models\SettingsPage( $nonces );
-
 			$settings_page_view = new Views\SettingsPage( $settings_page );
 			$settings_controller = new Controllers\Settings( $settings, $settings_page_view );
 			$settings_controller->initialize();

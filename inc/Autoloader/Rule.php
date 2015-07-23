@@ -10,7 +10,7 @@ namespace tf\Autoloader;
 interface Rule {
 
 	/**
-	 * Load class or interface.
+	 * Load a class or an interface.
 	 *
 	 * @param string $name Class or interface name.
 	 *
