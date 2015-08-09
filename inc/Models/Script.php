@@ -91,12 +91,14 @@ class Script {
 			TRUE
 		);
 
+		$messages = array(
+			'delete' => __( 'Do you really want to delete this page key?', 'page-keys' ),
+			'unload' => __( 'There are unsaved changes. Do you really want to leave?', 'page-keys' ),
+		);
+
 		$data = array(
 			'actions'  => $this->actions,
-			'messages' => array(
-				'delete' => __( 'Do you really want to delete this page key?', 'page-keys' ),
-				'unload' => __( 'There are unsaved changes. Do you really want to leave?', 'page-keys' ),
-			),
+			'messages' => array_map( 'esc_js', $messages ),
 			'nonces'   => $this->nonces,
 			'url'      => admin_url( 'admin-ajax.php', 'relative' ),
 		);

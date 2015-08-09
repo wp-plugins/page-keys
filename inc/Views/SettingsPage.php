@@ -3,8 +3,8 @@
 namespace tf\PageKeys\Views;
 
 use tf\PageKeys\ListTable;
-use tf\PageKeys\Models\SettingsPage as Model;
 use tf\PageKeys\Models;
+use tf\PageKeys\Models\SettingsPage as Model;
 
 /**
  * Class SettingsPage
@@ -32,7 +32,7 @@ class SettingsPage {
 
 		$this->model = $model;
 
-		$this->title = _x( 'Page Keys', 'Settings page title', 'page-keys' );
+		$this->title = esc_html_x( 'Page Keys', 'Settings page title', 'page-keys' );
 	}
 
 	/**
@@ -44,7 +44,7 @@ class SettingsPage {
 	 */
 	public function add() {
 
-		$menu_title = _x( 'Page Keys', 'Menu item title', 'page-keys' );
+		$menu_title = esc_html_x( 'Page Keys', 'Menu item title', 'page-keys' );
 		add_pages_page(
 			$this->title,
 			$menu_title,
@@ -70,7 +70,7 @@ class SettingsPage {
 		?>
 		<div class="wrap">
 			<h2>
-				<?php esc_html_e( $this->title ); ?>
+				<?php echo $this->title; ?>
 				<?php if ( $current_user_can_edit ) : ?>
 					<a href="<?php echo $this->model->get_add_page_key_url(); ?>" class="add-new-h2">
 						<?php esc_html_e( 'Add New' ); ?>
@@ -86,7 +86,17 @@ class SettingsPage {
 					<?php submit_button(); ?>
 					<div class="error inline">
 						<p>
-							<?php _e( '<strong>Warning:</strong> Duplicate page keys found!', 'page-keys' ); ?>
+							<?php
+							printf(
+								esc_html_x(
+									'%sWarning%s: Duplicate page keys found!',
+									'%s=<strong> and </strong>',
+									'page-keys'
+								),
+								'<strong>',
+								'</strong>'
+							);
+							?>
 						</p>
 					</div>
 				<?php endif; ?>

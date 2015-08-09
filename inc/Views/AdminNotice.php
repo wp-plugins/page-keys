@@ -58,25 +58,20 @@ class AdminNotice {
 		if ( ! $missing_pages ) {
 			return;
 		}
+
+		$error_message = esc_html_x(
+			'%sImportant:%s Not all registered page keys have a page assigned.', '%s = <strong> and </strong>',
+			'page-keys'
+		);
+
+		$link_url = admin_url( 'edit.php?post_type=page&page=' . $settings_page_slug );
 		?>
 		<div class="error">
 			<p>
-				<?php
-				$text = _x(
-					'<strong>Important:</strong> Not all registered page keys have a page assigned. %s.',
-					'Admin notice, %s=link', 'page-keys'
-				);
-
-				$url = admin_url( 'edit.php?post_type=page&page=' . $settings_page_slug );
-				$link_text = _x( 'Assign pages now', 'Link text in admin notice', 'page-keys' );
-				$link = sprintf(
-					'<a href="%s">%s</a>',
-					$url,
-					$link_text
-				);
-
-				printf( $text, $link );
-				?>
+				<?php printf( $error_message, '<strong>', '</strong>' ); ?>
+				<a href="<?php echo esc_url( $link_url ); ?>">
+					<?php echo esc_html_x( 'Assign pages now.', 'Link text in admin notice', 'page-keys' ); ?>
+				</a>
 			</p>
 		</div>
 	<?php

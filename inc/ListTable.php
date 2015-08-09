@@ -3,6 +3,7 @@
 namespace tf\PageKeys;
 
 use tf\PageKeys\Models;
+use tf\PageKeys\Models\SettingsPage as PageModel;
 
 require_once ABSPATH . 'wp-admin/includes/class-wp-list-table.php';
 
@@ -29,20 +30,20 @@ class ListTable extends \WP_List_Table {
 	private $name_prefix;
 
 	/**
-	 * @var Models\SettingsPage
+	 * @var PageModel
 	 */
-	private $settings_page;
+	private $page;
 
 	/**
 	 * Constructor. Set up the properties.
 	 *
-	 * @param Models\SettingsPage $settings_page Settings page model.
+	 * @param PageModel $page Settings page model.
 	 */
-	public function __construct( Models\SettingsPage $settings_page ) {
+	public function __construct( PageModel $page ) {
 
-		$this->settings_page = $settings_page;
+		$this->page = $page;
 
-		$slug = $settings_page->get_slug();
+		$slug = $page->get_slug();
 		parent::__construct(
 			array(
 				'singular' => 'page-key',
@@ -52,8 +53,8 @@ class ListTable extends \WP_List_Table {
 		);
 
 		$this->columns = array(
-			'page_key' => __( 'Page Key', 'page-keys' ),
-			'page_id'  => __( 'Page', 'page-keys' ),
+			'page_key' => esc_html__( 'Page Key', 'page-keys' ),
+			'page_id'  => esc_html__( 'Page', 'page-keys' ),
 		);
 
 		$this->name_prefix = Models\Option::get_name();
@@ -170,7 +171,7 @@ class ListTable extends \WP_List_Table {
 
 		if (
 			filter_input( INPUT_GET, 'action' ) === 'add'
-			&& $this->settings_page->current_user_can( 'edit' )
+			&& $this->page->current_user_can( 'edit' )
 		) {
 			$this->items[ ] = $this->get_empty_item();
 		}
@@ -198,7 +199,7 @@ class ListTable extends \WP_List_Table {
 
 		?>
 		<p>
-			<?php _e( 'For each page key, please select a page.', 'page-keys' ); ?>
+			<?php esc_html_e( 'For each page key, please select a page.', 'page-keys' ); ?>
 		</p>
 		<?php
 		parent::display();
@@ -260,8 +261,8 @@ class ListTable extends \WP_List_Table {
 		);
 
 		$actions = array();
-		if ( $this->settings_page->current_user_can( 'edit' ) ) {
-			$text = __( 'Edit' );
+		if ( $this->page->current_user_can( 'edit' ) ) {
+			$text = esc_html__( 'Edit' );
 			$url = get_permalink();
 			$title = esc_attr__( 'Edit this item' );
 			$actions[ 'edit hide-if-no-js' ] = sprintf(
@@ -271,8 +272,8 @@ class ListTable extends \WP_List_Table {
 				$title
 			);
 
-			$text = __( 'Delete Permanently' );
-			$url = $this->settings_page->get_delete_page_key_url( $page_key );
+			$text = esc_html__( 'Delete Permanently' );
+			$url = $this->page->get_delete_page_key_url( $page_key );
 			$title = esc_attr__( 'Delete this item permanently' );
 			$actions[ 'delete' ] = sprintf(
 				'<a class="submitdelete submitdelete-%4$s" title="%3$s" href="%2$s" data-id="%4$s">%1$s</a>',
@@ -353,7 +354,7 @@ class ListTable extends \WP_List_Table {
 	 */
 	public function no_items() {
 
-		_e( 'No page keys found.', 'page-keys' );
+		esc_html_e( 'No page keys found.', 'page-keys' );
 	}
 
 }

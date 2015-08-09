@@ -3,7 +3,6 @@
 namespace tf\PageKeys\Controllers;
 
 use tf\PageKeys\Models;
-use tf\PageKeys\Models\SettingsErrors;
 
 /**
  * Class AJAX

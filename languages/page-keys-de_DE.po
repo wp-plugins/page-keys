@@ -1,9 +1,9 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Page Keys v1.2\n"
+"Project-Id-Version: Page Keys v1.3.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2015-07-21 13:27:41+0000\n"
+"PO-Revision-Date: 2015-08-09 15:28:17+0000\n"
 "Last-Translator: Thorsten Frommen <tf@ipm-frommen.de>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -20,52 +20,52 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 "X-Textdomain-Support: yes"
 
-#: inc/ListTable.php:55
+#: inc/ListTable.php:56
 #@ page-keys
 msgid "Page Key"
 msgstr "Seitenschlüssel"
 
-#: inc/ListTable.php:56
+#: inc/ListTable.php:57
 #@ page-keys
 msgid "Page"
 msgstr "Seite"
 
-#: inc/ListTable.php:201
+#: inc/ListTable.php:202
 #@ page-keys
 msgid "For each page key, please select a page."
 msgstr "Wähle für jeden Seitenschlüssel eine Seite aus."
 
-#: inc/ListTable.php:264
+#: inc/ListTable.php:265
 #@ default
 msgid "Edit"
 msgstr ""
 
-#: inc/ListTable.php:266
+#: inc/ListTable.php:267
 #@ default
 msgid "Edit this item"
 msgstr ""
 
-#: inc/ListTable.php:274
+#: inc/ListTable.php:275
 #@ default
 msgid "Delete Permanently"
 msgstr ""
 
-#: inc/ListTable.php:276
+#: inc/ListTable.php:277
 #@ default
 msgid "Delete this item permanently"
 msgstr ""
 
-#: inc/ListTable.php:356
+#: inc/ListTable.php:357
 #@ page-keys
 msgid "No page keys found."
 msgstr "Keine Seitenschlüssel gefunden."
 
-#: inc/Models/Script.php:96
+#: inc/Models/Script.php:95
 #@ page-keys
 msgid "Do you really want to delete this page key?"
 msgstr "Willst du diesen Seitenschlüssel wirklich löschen?"
 
-#: inc/Models/Script.php:97
+#: inc/Models/Script.php:96
 #@ page-keys
 msgid "There are unsaved changes. Do you really want to leave?"
 msgstr "Nicht alle Änderungen wurden gespeichert. Willst du die Seite wirklich verlassen?"
@@ -82,19 +82,6 @@ msgctxt "Menu item title"
 msgid "Page Keys"
 msgstr "Seitenschlüssel"
 
-#: inc/Views/AdminNotice.php:66
-#, php-format
-#@ page-keys
-msgctxt "Admin notice, %s=link"
-msgid "<strong>Important:</strong> Not all registered page keys have a page assigned. %s."
-msgstr "<strong>Wichtig:</strong> Es wurde nicht für alle Seitenschlüssel eine Seite gewählt! %s."
-
-#: inc/Views/AdminNotice.php:71
-#@ page-keys
-msgctxt "Link text in admin notice"
-msgid "Assign pages now"
-msgstr "Seiten jetzt wählen"
-
 #: inc/Views/SettingsPage.php:76
 #@ default
 msgid "Add New"
@@ -104,7 +91,7 @@ msgstr ""
 #: page-keys.php:0
 #@ page-keys
 msgid "Page Keys"
-msgstr "Seitenschlüssel"
+msgstr ""
 
 #. translators: plugin header field 'Author'
 #: page-keys.php:0
@@ -145,11 +132,6 @@ msgctxt "Settings error message, %s=page key"
 msgid "Page key '%s' permanently deleted."
 msgstr "Seitenschlüssel '%s' dauerhaft gelöscht."
 
-#: inc/Views/SettingsPage.php:89
-#@ page-keys
-msgid "<strong>Warning:</strong> Duplicate page keys found!"
-msgstr "<strong>Warnung:</strong> Doppelte Seitenschlüssel gefunden!"
-
 #: inc/Models/SettingsErrors/NoPermissionToEdit.php:21
 #@ page-keys
 msgctxt "Settings error message"
@@ -174,9 +156,29 @@ msgstr "Registriere Seitenschlüssel, weise ihnen echte WordPress-Seiten zu und 
 msgid "http://ipm-frommen.de/wordpress"
 msgstr ""
 
+#: inc/Views/AdminNotice.php:63
+#, php-format
+#@ page-keys
+msgctxt "%s = <strong> and </strong>"
+msgid "%sImportant:%s Not all registered page keys have a page assigned."
+msgstr "%sWichtig:%s Nicht allen registrierten Seitenschlüsseln wurde eine Seite zugewiesen."
+
+#: inc/Views/SettingsPage.php:92
+#, php-format
+#@ page-keys
+msgctxt "%s=<strong> and </strong>"
+msgid "%sWarning%s: Duplicate page keys found!"
+msgstr "%sWarnung%s: Doppelte Seitenschlüssel gefunden!"
+
 #. translators: plugin header field 'Version'
 #: page-keys.php:0
 #@ page-keys
-msgid "1.2"
+msgid "1.3.1"
 msgstr ""
+
+#: inc/Views/AdminNotice.php:73
+#@ page-keys
+msgctxt "Link text in admin notice"
+msgid "Assign pages now."
+msgstr "Seiten jetzt zuweisen."
 

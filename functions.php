@@ -1,6 +1,6 @@
 <?php # -*- coding: utf-8 -*-
 
-use tf\PageKeys\Models;
+use tf\PageKeys\Models\Option;
 
 if ( ! function_exists( 'get_page_by_key' ) ) :
 
@@ -13,7 +13,7 @@ if ( ! function_exists( 'get_page_by_key' ) ) :
 	 */
 	function get_page_by_key( $key ) {
 
-		$pages = Models\Option::get();
+		$pages = Option::get();
 		if ( isset( $pages[ $key ][ 'page_id' ] ) ) {
 			return get_post( $pages[ $key ][ 'page_id' ] );
 		}
