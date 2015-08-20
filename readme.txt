@@ -3,7 +3,7 @@ Contributors: ipm-frommen
 Donate link: http://ipm-frommen.de/wordpress
 Tags: page, pages, keys
 Requires at least: 3.5.0
-Tested up to: 4.2.4
+Tested up to: 4.3
 Stable tag: trunk
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
